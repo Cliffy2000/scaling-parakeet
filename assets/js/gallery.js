@@ -60,7 +60,10 @@
     stage.src = items[current].full;
     stage.alt = items[current].alt;
     caption.textContent = `${current + 1} / ${items.length}`;
-    if (!dialog.open) dialog.showModal();
+    if (!dialog.open) {
+      dialog.showModal();
+      document.documentElement.classList.add('lightbox-open');
+    }
     for (const step of [1, -1]) {
       new Image().src = items[(current + step + items.length) % items.length].full;
     }
@@ -81,5 +84,8 @@
     }
   });
 
-  dialog.addEventListener('close', () => { stage.removeAttribute('src'); });
+  dialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('lightbox-open');
+    stage.removeAttribute('src');
+  });
 })();
